@@ -1,11 +1,49 @@
 {
-  "compatibleVersion": 3,
-  "bundleVersion": 1,
+  "$schema": "https://raw.githubusercontent.com/BohemianCoding/SketchAPI/develop/docs/sketch-plugin-manifest-schema.json",
+  "icon": "icon.png",
+  "disableCocoaScriptPreprocessor": true,
   "commands": [
     {
-      "name": "my-command",
-      "identifier": "sketch-notes.my-command-identifier",
-      "script": "./my-command.js",
+      "name": "Setup Comments",
+      "identifier": "sketch-notes.setup",
+      "shortcut": "ctrl option c",
+      "script": "./setup.js"
+    },
+    {
+      "name": "Remove Comments",
+      "identifier": "sketch-notes.remove",
+      "shortcut": "",
+      "script": "./actions/remove-comments.js"
+    },
+    {
+      "name": "New Comment",
+      "identifier": "sketch-notes.create",
+      "shortcut": "ctrl option n",
+      "script": "./actions/create-comment.js"
+    },
+    {
+      "name": "Edit Comment",
+      "identifier": "sketch-notes.edit",
+      "shortcut": "ctrl option e",
+      "script": "./actions/edit-comment.js"
+    },
+    {
+      "name": "Delete Comment",
+      "identifier": "sketch-notes.delete",
+      "shortcut": "ctrl option d",
+      "script": "./actions/delete-comment.js"
+    },
+    {
+      "name": "Hide Comments",
+      "identifier": "sketch-notes.toggle-comments",
+      "shortcut": "ctrl option h",
+      "script": "./actions/toggle-comments.js"
+    },
+    {
+      "name": "Toolbar",
+      "identifier": "sketch-notes.toolbar",
+      "shortcut": "ctrl option y",
+      "script": "./toolbar.js",
       "handlers": {
         "run": "onRun",
         "actions": {
@@ -15,9 +53,15 @@
     }
   ],
   "menu": {
-    "title": "sketch-notes",
+    "title": "Sketch Notes",
     "items": [
-      "sketch-notes.my-command-identifier"
+      "sketch-notes.setup",
+      "sketch-notes.remove",
+      "sketch-notes.create",
+      "sketch-notes.edit",
+      "sketch-notes.delete",
+      "sketch-notes.toggle-comments",
+      "sketch-notes.toolbar"
     ]
   }
 }
