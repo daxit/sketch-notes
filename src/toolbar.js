@@ -8,7 +8,7 @@ import createComment from './actions/create-comment';
 import editComment from './actions/edit-comment';
 import deleteComment from './actions/delete-comment';
 import hideComments from './actions/toggle-comments';
-import removeCommments from './actions/remove-comments';
+import removeComments from './actions/remove-comments';
 
 const webviewIdentifier = 'sketch-notes.webview';
 
@@ -17,7 +17,7 @@ export default function () {
     x: 250,
     y: 120,
     width: 255,
-    height: 60,
+    height: 65,
     identifier: webviewIdentifier,
     alwaysOnTop: true,
     resizable: false,
@@ -53,7 +53,7 @@ export default function () {
   webContents.on('edit', s => editComment());
   webContents.on('delete', s => deleteComment());
   webContents.on('hide', s => hideComments());
-  webContents.on('remove', s => removeCommments());
+  webContents.on('remove', s => removeComments());
   webContents.on('close', s => {
     browserWindow.close();
   });
