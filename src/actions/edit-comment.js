@@ -1,40 +1,29 @@
-import sketch from 'sketch';
-import { Comment } from '../model/Comment.js';
-import { renderComments, createMarker } from '../util.js';
-
-// Object definitions
-var Rectangle = require('sketch/dom').Rectangle;
-var Group = require('sketch/dom').Group;
-var UI = require('sketch/ui');
-var Settings = require('sketch/settings');
+import { UI, Settings, getSelectedDocument } from 'sketch';
+import { renderComments } from '../util.js';
 
 export default function () {
-  const selectedObject = sketch.getSelectedDocument().selectedLayers.layers[0];
-  var context = Settings.layerSettingForKey(selectedObject.getParentArtboard(), 'context');
-
-  var comment = context.commentList.find(comment => {
-    return comment.subjectID === selectedObject.layers[0].id;
-  });
-
-  var valid = true;
+  if (getSelectedDocument().selectedLayers.length > 1) {
+    UI.message('Select one layer or group');
+    return;
+  }
+  const selection = getSelectedDocument().selectedLayers.layers[0];
+  let context = Settings.layerSettingForKey(selection.getParentArtboard(), 'context');
+  let comment = context.commentList.find(comment => comment.subjectID === selection.layers[0].id);
+  if (!comment) {
+    UI.message('Layer does not have a comment');
+    return;
+  }
   UI.getInputFromUser(
     'Update comment:',
     {
       initialValue: comment.comment,
       numberOfLines: 3
     },
-    (err, value) => {
-      if (err) valid = false; //most likely canceled, set to not valid
-      comment.comment = value;
-    }
+    (err, value) => (comment.comment = err ? comment.comment : value)
   );
-  if (!valid) {
-    return;
-  }
-
   renderComments(
     context.commentList,
-    sketch.getSelectedDocument().getLayerWithID(context.commentsContainerID)
+    getSelectedDocument().getLayerWithID(context.commentsContainerID)
   );
-  Settings.setLayerSettingForKey(selectedObject.getParentArtboard(), 'context', context);
+  Settings.setLayerSettingForKey(selection.getParentArtboard(), 'context', context);
 }
