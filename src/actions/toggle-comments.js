@@ -1,33 +1,35 @@
-import sketch from 'sketch';
-
-// Object definitions
-var Rectangle = require('sketch/dom').Rectangle;
-var Settings = require('sketch/settings');
+import { Rectangle, Settings, UI, getSelectedDocument } from 'sketch';
 
 // Global Constants
 const PANEL_WIDTH = 300;
 
 export default function () {
-  const board = sketch.getSelectedDocument().selectedLayers.layers[0];
-  // Check to see if selection is a valid artboard
-  if (board === undefined || board.type !== 'Artboard') {
-    sketch.UI.message('Selection is not an artboard.');
+  const board = getSelectedDocument().selectedLayers.layers[0];
+  // Check if selection is a valid Artboard
+  if (board === undefined) {
+    UI.message('No Artboard selected');
     return;
   }
-  var context = Settings.layerSettingForKey(board, 'context');
+  if (board.type !== 'Artboard') {
+    UI.message('Selection is not an Artboard');
+    return;
+  }
+  let context = Settings.layerSettingForKey(board, 'context');
+  // Update hidden in context
   context.hidden = !context.hidden;
-
+  // Shrink the Artboard
   board.frame = new Rectangle(
     board.frame.x,
     board.frame.y,
     board.frame.width + (context.hidden ? PANEL_WIDTH * -1 : PANEL_WIDTH),
     board.frame.height
   );
-  sketch.getSelectedDocument().getLayerWithID(context.notesPanelID).hidden = context.hidden;
-  for (let i = 0; i < context.commentList.length; i++) {
-    sketch.getSelectedDocument().getLayerWithID(context.commentList[i].markerID).hidden =
-      context.hidden;
-  }
-
+  // Hide notes panel
+  getSelectedDocument().getLayerWithID(context.notesPanelID).hidden = context.hidden;
+  // Hide every notes marker
+  context.commentList.forEach(comment => {
+    getSelectedDocument().getLayerWithID(comment.markerID).hidden = context.hidden;
+  });
+  // Update the context
   Settings.setLayerSettingForKey(board, 'context', context);
 }
