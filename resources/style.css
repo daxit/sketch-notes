@@ -3,6 +3,7 @@
 html {
   box-sizing: border-box;
   background: transparent;
+  padding: 5px;
 
   /* Prevent the page to be scrollable */
   overflow: hidden;
@@ -11,7 +12,9 @@ html {
   cursor: default;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: inherit;
   margin: 0;
   padding: 0;
@@ -22,7 +25,29 @@ html {
   user-select: none;
 }
 
-input, textarea {
+input,
+textarea {
   -webkit-user-select: auto;
   user-select: auto;
+}
+
+.action {
+  background-color: #6f6f6f;
+  /* text-decoration: none; */
+  border: none;
+  padding: 5px;
+  color: #bebebe;
+  display: inline-block;
+}
+.icon {
+  fill: #bebebe;
+  vertical-align: middle;
+}
+button:hover .icon {
+  fill: red;
+}
+
+.close {
+  background-color: rgba(0, 0, 0, 0);
+  margin-right: 10px;
 }

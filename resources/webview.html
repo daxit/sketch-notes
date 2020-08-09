@@ -1,19 +1,134 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>sketch-notes</title>
-  <link rel="stylesheet" href="./style.css">
-</head>
-<body>
-  sketch-notes
+  <head>
+    <meta charset="utf-8" />
+    <title>Sketch Notes</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div>
+      <button class="action close" id="close">
+        <svg
+          class="icon"
+          preserveAspectRatio="xMidYMid meet"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 32 32"
+          aria-hidden="true"
+          style="will-change: transform;"
+        >
+          <path
+            d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4l6.6 6.6L8 22.6 9.4 24l6.6-6.6 6.6 6.6 1.4-1.4-6.6-6.6L24 9.4z"
+          ></path>
+        </svg>
+      </button>
 
-  <div>
-    <button id="button">Get a random number</button>
-  </div>
-  <div id="answer"></div>
+      <button class="action" id="setup">
+        <svg
+          class="icon"
+          preserveAspectRatio="xMidYMid meet"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 32 32"
+          aria-hidden="true"
+          style="will-change: transform;"
+        >
+          <path d="M19 10h7v2h-7zm0 5h7v2h-7zm0 5h7v2h-7z"></path>
+          <path
+            d="M28 5H4a2.002 2.002 0 0 0-2 2v18a2.002 2.002 0 0 0 2 2h24a2.003 2.003 0 0 0 2-2V7a2.002 2.002 0 0 0-2-2zM4 7h11v18H4zm13 18V7h11l.002 18z"
+          ></path>
+        </svg>
+      </button>
 
-  <!-- notice the "../resources_" here. It's because webview.js will be compiled in a different folder with the prefix. -->
-  <script src="../resources_webview.js"></script>
-</body>
+      <button class="action" id="create">
+        <svg
+          class="icon"
+          preserveAspectRatio="xMidYMid meet"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 32 32"
+          aria-hidden="true"
+          style="will-change: transform;"
+        >
+          <path d="M17 15V7h-2v8H7v2h8v8h2v-8h8v-2h-8z"></path>
+        </svg>
+      </button>
+
+      <button class="action" id="edit">
+        <svg
+          class="icon"
+          preserveAspectRatio="xMidYMid meet"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 32 32"
+          aria-hidden="true"
+          style="will-change: transform;"
+        >
+          <path
+            d="M2 27h28v2H2zM25.41 9a2 2 0 0 0 0-2.83l-3.58-3.58a2 2 0 0 0-2.83 0l-15 15V24h6.41zm-5-5L24 7.59l-3 3L17.41 7zM6 22v-3.59l10-10L19.59 12l-10 10z"
+          ></path>
+        </svg>
+      </button>
+
+      <button class="action" id="delete">
+        <svg
+          class="icon"
+          preserveAspectRatio="xMidYMid meet"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 32 32"
+          aria-hidden="true"
+          style="will-change: transform;"
+        >
+          <path d="M7 15h18v2H7z"></path>
+        </svg>
+      </button>
+
+      <button class="action" id="hide">
+        <svg
+          class="icon"
+          preserveAspectRatio="xMidYMid meet"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 32 32"
+          aria-hidden="true"
+          style="will-change: transform;"
+        >
+          <path
+            d="M5.24 22.51l1.43-1.42A14.06 14.06 0 0 1 3.07 16C5.1 10.93 10.7 7 16 7a12.38 12.38 0 0 1 4 .72l1.55-1.56A14.72 14.72 0 0 0 16 5 16.69 16.69 0 0 0 1.06 15.66a1 1 0 0 0 0 .68 16 16 0 0 0 4.18 6.17z"
+          ></path>
+          <path
+            d="M12 15.73a4 4 0 0 1 3.7-3.7l1.81-1.82a6 6 0 0 0-7.33 7.33zm18.94-.07a16.4 16.4 0 0 0-5.74-7.44L30 3.41 28.59 2 2 28.59 3.41 30l5.1-5.1A15.29 15.29 0 0 0 16 27a16.69 16.69 0 0 0 14.94-10.66 1 1 0 0 0 0-.68zM20 16a4 4 0 0 1-6 3.44L19.44 14a4 4 0 0 1 .56 2zm-4 9a13.05 13.05 0 0 1-6-1.58l2.54-2.54a6 6 0 0 0 8.35-8.35l2.87-2.87A14.54 14.54 0 0 1 28.93 16C26.9 21.07 21.3 25 16 25z"
+          ></path>
+        </svg>
+      </button>
+
+      <button class="action" id="remove">
+        <svg
+          class="icon"
+          preserveAspectRatio="xMidYMid meet"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 32 32"
+          aria-hidden="true"
+          style="will-change: transform;"
+        >
+          <path d="M12 12h2v12h-2zm6 0h2v12h-2z"></path>
+          <path
+            d="M4 6v2h2v20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8h2V6zm4 22V8h16v20zm4-26h8v2h-8z"
+          ></path>
+        </svg>
+      </button>
+    </div>
+    <!-- <div id="answer"></div> -->
+    <!-- notice the "../" here. It's because webview.js will be compiled in a different folder -->
+    <script src="../webview.js"></script>
+  </body>
 </html>
