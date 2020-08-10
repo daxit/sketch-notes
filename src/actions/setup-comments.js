@@ -91,7 +91,6 @@ export default function () {
  * @param {*} board the board for which comments are created
  */
 function _repositionArtboards(page, board) {
-  console.log(page.layers.length);
   for (let i = 0; i < page.layers.length; i++) {
     // Check if X edges overlap
     if (page.layers[i].type === 'Artboard' && page.layers[i].frame.x > board.frame.x) {
