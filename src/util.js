@@ -108,7 +108,7 @@ export function createMarker(value, parent) {
       alignment: Text.Alignment.center,
       lineHeight: 14,
       verticalAlignment: Text.VerticalAlignment.center,
-      textColor: '#ffffffff',
+      textColor: '#f4f4f4',
       fontSize: 8,
       fontWeight: 10,
       borders: []
