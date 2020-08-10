@@ -1,43 +1,45 @@
-import sketch from 'sketch';
+import { Rectangle, Settings, UI, getSelectedDocument } from 'sketch';
 import { renderComments } from '../util.js';
 
-// Object definitions
-var Rectangle = require('sketch/dom').Rectangle;
-var Settings = require('sketch/settings');
-
 export default function () {
-  // Static Values
-  var selectedObject = sketch.getSelectedDocument().selectedLayers.layers[0];
-  const board = selectedObject.getParentArtboard();
-  var context = Settings.layerSettingForKey(board, 'context');
+  const document = getSelectedDocument();
+  if (document.selectedLayers.length > 1) {
+    UI.message('Select one layer or group');
+    return;
+  }
+  const selection = document.selectedLayers.layers[0];
+  const board = selection.getParentArtboard();
+  const context = Settings.layerSettingForKey(board, 'context');
 
-  // Remove comment from list
-  context.commentList.splice(
-    context.commentList.findIndex(comment => {
-      if (comment.subjectID === selectedObject.layers[0].id) {
-        return true;
-      }
-      if (comment.commentID === selectedObject.id) {
-        selectedObject = sketch.getSelectedDocument().getLayerWithID(comment.subjectID).parent;
-        return true;
-      }
-      return false;
-    }),
-    1
+  // Find index of comment if it exists
+  const commentIdx = context.commentList.findIndex(comment => {
+    return comment.subjectID === selection.id || comment.commentID === selection.id;
+  });
+
+  if (commentIdx === -1) {
+    UI.message('Comment not found');
+    return;
+  }
+
+  // Remove comment and store its value
+  const comment = context.commentList.splice(commentIdx, 1)[0];
+  // Get subject associated with comment
+  const subject = document.getLayerWithID(comment.subjectID);
+  // Get parent group of subject, containing marker and subject
+  const commentGroup = subject.parent;
+  // Reframe and reparent commented subject
+  subject.frame = new Rectangle(
+    commentGroup.frame.x + 10,
+    commentGroup.frame.y + 10,
+    commentGroup.frame.width - 10,
+    commentGroup.frame.height - 10
   );
-
-  let subject = selectedObject.layers[0];
-  // Reparent commented object
-  subject.frame = new Rectangle(selectedObject.frame.x + 10, selectedObject.frame.y + 10, 0, 0);
-  subject.parent = selectedObject.parent;
-  subject.index = selectedObject.index;
-  // Delete comment
-  selectedObject.remove();
+  subject.parent = commentGroup.parent;
+  subject.index = commentGroup.index;
+  // Delete parent group
+  commentGroup.remove();
 
   // Rerender comments and save context
-  renderComments(
-    context.commentList,
-    sketch.getSelectedDocument().getLayerWithID(context.commentsContainerID)
-  );
+  renderComments(context.commentList, document.getLayerWithID(context.commentsContainerID));
   Settings.setLayerSettingForKey(board, 'context', context);
 }
