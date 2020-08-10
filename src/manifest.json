@@ -7,7 +7,7 @@
       "name": "Setup Comments",
       "identifier": "sketch-notes.setup",
       "shortcut": "ctrl option c",
-      "script": "./setup.js"
+      "script": "./actions/setup-comments.js"
     },
     {
       "name": "Remove Comments",

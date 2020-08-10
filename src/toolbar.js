@@ -3,7 +3,7 @@ import { getWebview } from 'sketch-module-web-view/remote';
 import UI from 'sketch/ui';
 
 //import commands
-import setupComments from './setup';
+import setupComments from './actions/setup-comments';
 import createComment from './actions/create-comment';
 import editComment from './actions/edit-comment';
 import deleteComment from './actions/delete-comment';
