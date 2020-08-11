@@ -31,5 +31,9 @@
   "dependencies": {
     "sketch-module-web-view": "^3.1.4"
   },
-  "author": "Daxit Agarwal <Daxit.Agarwal@ibm.com>"
+  "author": "Daxit Agarwal <Daxit.Agarwal@ibm.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daxit/sketch-notes.git"
+  }
 }
