@@ -1,7 +1,7 @@
 {
   "name": "sketch-notes",
   "description": "A Sketch plugin that lets you add notes that become part of your Artboard and can be exported to a PDF or other Sketch formats.",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "engines": {
     "sketch": ">=3.0"
   },
