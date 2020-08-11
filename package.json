@@ -1,5 +1,6 @@
 {
   "name": "sketch-notes",
+  "description": "A Sketch plugin that lets you add notes that become part of your Artboard and can be exported to a PDF or other Sketch formats.",
   "version": "0.1.0",
   "engines": {
     "sketch": ">=3.0"
@@ -31,7 +32,7 @@
   "dependencies": {
     "sketch-module-web-view": "^3.1.4"
   },
-  "author": "Daxit Agarwal <Daxit.Agarwal@ibm.com>",
+  "author": "Daxit Agarwal <agarwaldax@gmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/daxit/sketch-notes.git"
