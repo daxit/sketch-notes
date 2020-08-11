@@ -15,7 +15,7 @@ export default function () {
   const options = {
     x: 250,
     y: 120,
-    width: 255,
+    width: 285,
     height: 40,
     identifier: webviewIdentifier,
     alwaysOnTop: true,

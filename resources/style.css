@@ -43,11 +43,22 @@ textarea {
   fill: #bebebe;
   vertical-align: middle;
 }
-button:hover .icon {
-  fill: red;
+.action:hover {
+  background-color: #0353e9;
+}
+.action:hover .icon {
+  fill: #ffffff;
 }
 
 .close {
   background-color: rgba(0, 0, 0, 0);
-  margin-right: 10px;
+  margin-right: 3px;
+  border-radius: 50%;
+}
+
+.drag {
+  background-color: rgba(0, 0, 0, 0);
+}
+.drag:hover {
+  background: none;
 }
