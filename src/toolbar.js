@@ -1,8 +1,7 @@
 import BrowserWindow from 'sketch-module-web-view';
 import { getWebview } from 'sketch-module-web-view/remote';
-import UI from 'sketch/ui';
 
-//import commands
+//Import actions
 import setupComments from './actions/setup-comments';
 import createComment from './actions/create-comment';
 import editComment from './actions/edit-comment';
@@ -22,7 +21,7 @@ export default function () {
     alwaysOnTop: true,
     resizable: false,
     show: false,
-    // frame: false,
+    frame: false,
     titleBarStyle: 'default'
   };
 
@@ -35,18 +34,11 @@ export default function () {
 
   const webContents = browserWindow.webContents;
 
-  // print a message when the page loads
-  // webContents.on('did-finish-load', () => {
-  //   UI.message('UI loaded!')
-  // })
-
   // add a handler for a call from web content's javascript
-  // webContents.on('nativeLog', s => {
-  //   UI.message(s)
-  //   webContents
-  //     .executeJavaScript(`setRandomNumber(${Math.random()})`)
-  //     .catch(console.error)
-  // })
+  webContents.on('nativeLog', s => {
+    UI.message(s);
+    webContents.executeJavaScript(`setRandomNumber(${Math.random()})`).catch(console.error);
+  });
 
   webContents.on('setup', s => setupComments());
   webContents.on('create', s => createComment());
