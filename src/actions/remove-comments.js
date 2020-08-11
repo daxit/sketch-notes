@@ -1,45 +1,46 @@
-import sketch from 'sketch';
-import { renderComments } from '../util.js';
-
-// Object definitions
-var Rectangle = require('sketch/dom').Rectangle;
-var Settings = require('sketch/settings');
+import { Rectangle, Settings, getSelectedDocument } from 'sketch';
 
 // Global Constants
 const PANEL_WIDTH = 300;
 
 export default function () {
-  const page = sketch.getSelectedDocument().selectedPage;
-  const board = sketch.getSelectedDocument().selectedLayers.layers[0];
-  // Check to see if board is a valid artboard
-  if (board === undefined || board.type !== 'Artboard') {
-    sketch.UI.message('Invalid selection or selection is not an artboard.');
+  const document = getSelectedDocument();
+  const page = document.selectedPage;
+  const board = document.selectedLayers.layers[0];
+
+  // Check to see if board is a valid Artboard
+  if (board === undefined) {
+    UI.message('No Artboard selected');
     return;
   }
-  var context = Settings.layerSettingForKey(board, 'context');
-
-  // Go through and delete every comment
-  for (let i = 0; i < context.commentList.length; i++) {
-    let subject = sketch.getSelectedDocument().getLayerWithID(context.commentList[i].subjectID);
-    let parent = subject.parent;
-    // Reparent commented object
-    subject.frame = new Rectangle(parent.frame.x + 10, parent.frame.y + 10, 0, 0);
-    subject.parent = parent.parent;
-    subject.index = parent.index;
-    // Delete comment
-    parent.remove();
+  if (board.type !== 'Artboard') {
+    UI.message('Selection is not an Artboard');
+    return;
   }
 
-  // Empty comment list
-  context.commentList = [];
-  // Rerender comments
-  renderComments(
-    context.commentList,
-    sketch.getSelectedDocument().getLayerWithID(context.commentsContainerID)
-  );
-  // Remove the notes panel
-  sketch.getSelectedDocument().getLayerWithID(context.notesPanelID).remove();
-  // Reset the artboard's width
+  let context = Settings.layerSettingForKey(board, 'context');
+  // Go through and delete every comment group
+  context.commentList.forEach(comment => {
+    // Get subject associated with comment
+    const subject = document.getLayerWithID(comment.subjectID);
+    // Get parent group of subject, containing marker and subject
+    const commentGroup = subject.parent;
+    // Reframe and reparent commented subject
+    subject.frame = new Rectangle(
+      commentGroup.frame.x + 10,
+      commentGroup.frame.y + 10,
+      commentGroup.frame.width - 10,
+      commentGroup.frame.height - 10
+    );
+    subject.parent = commentGroup.parent;
+    subject.index = commentGroup.index;
+    // Delete parent group
+    commentGroup.remove();
+  });
+
+  // Remove notes panel
+  document.getLayerWithID(context.notesPanelID).remove();
+  // Reset Artboard size
   board.frame = new Rectangle(
     board.frame.x,
     board.frame.y,
@@ -47,7 +48,7 @@ export default function () {
     board.frame.height
   );
 
-  // Move artboards back to the left
+  // Move Artboards back to the left
   for (let i = 0; i < page.layers.length; i++) {
     if (page.layers[i].type === 'Artboard' && page.layers[i].frame.x > board.frame.x) {
       if (
