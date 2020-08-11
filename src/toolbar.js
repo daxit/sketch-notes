@@ -16,7 +16,7 @@ export default function () {
     x: 250,
     y: 120,
     width: 255,
-    height: 65,
+    height: 40,
     identifier: webviewIdentifier,
     alwaysOnTop: true,
     resizable: false,
